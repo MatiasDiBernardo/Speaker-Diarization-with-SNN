@@ -1,12 +1,8 @@
-import numpy as np
-import pandas as pd
 import os
 import itertools
 import pathlib
 import shutil
 import random
-
-#Prepare the raw dataset into the pairs spected by the model
 
 class LoadData():
     """
@@ -15,7 +11,7 @@ class LoadData():
 
     path_data: Directory with the folders with the speakers
     path_save: Place to save the reorderer data
-    num_data: Max data pair for speaker
+    num_data: Max data pair for each speaker
 
     """
     def __init__(self, path_data, path_save, num_data):
@@ -26,7 +22,7 @@ class LoadData():
     def all_combinations(self, list_audio):
         """
         Estabilsh all the diferent combinations of the audio
-        list with one speaker to create postive pairs
+        list with one speaker to create positive pairs
         """
         positive_pairs = []
 
@@ -54,7 +50,6 @@ class LoadData():
 
         return negative_pairs
 
-
     def get_random_audio_from_speaker(self, dir_speaker):
 
         path = os.path.join(self.path_data, dir_speaker)
@@ -68,7 +63,6 @@ class LoadData():
             return os.path.join(first_folder_path, audios_from_speaker[pick]) 
         else:
             return os.path.join(first_folder_path, audios_from_speaker[pick - 1]) 
-
 
     def string_num(self, i):
         num = str(i)
@@ -89,13 +83,11 @@ class LoadData():
 
         return list(pathlib.Path(first_folder_path).glob('*.flac'))  #Para sacar los txt
 
-
     def positive_pairs(self):
         """
         Create dir_pairs, nested list where the first index is the
         speakar and the second is a positive pair
         """
-
         speakers_list = os.listdir(self.path_data)
         dir_pairs = []
 
@@ -151,10 +143,6 @@ class LoadData():
 
         dir_diff = self.negative_pairs()
 
-        print(len(dir_diff))
-
-        print(dir_diff[20])
-
         for i in range(len(dir_diff)):
             self.move_file_diff(i, dir_diff[i])
 
@@ -168,3 +156,4 @@ path_save = 'data\Ordered Data'
 num_pairs = 100
 
 test = LoadData(path_data, path_save, num_pairs)
+#test.create_data()
