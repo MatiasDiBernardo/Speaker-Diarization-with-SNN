@@ -3,7 +3,7 @@ import numpy as np
 import scipy
 from keras import Sequential
 
-#Extract x-vector of audio
+#Extract x-vector of audio, ver si guardar toda la data en memoria o usar un generator
 
 class FeatureExtraction():
     '''
