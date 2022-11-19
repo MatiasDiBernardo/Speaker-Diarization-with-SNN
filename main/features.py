@@ -12,6 +12,20 @@ class FeatureExtraction():
     def __init__(self):
         pass
 
+    def check_length_and_pad(self, audio, fs):
+        """
+        Takes the audio and zero pads to the length
+        defined by the window
+        """
+
+        if len(audio)/fs < self.win:
+            diff = self.win * fs - len(audio)//fs
+
+            return np.hstack([np.zeros(diff), audio])  #Hacer que sea adelante o atras random
+        
+        else:
+            return audio[:fs*self.win]
+
     def get_mel(self):
         pass
 
