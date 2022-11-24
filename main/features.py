@@ -4,7 +4,7 @@ import scipy
 import random
 from keras import Sequential
 
-#Extract x-vector of audio, ver si guardar toda la data en memoria o usar un generator
+#Extract x-vector of audio, ver si guardar toda la data en memoria o usar un generator, test
 
 class FeatureExtraction():
     '''
