@@ -12,7 +12,6 @@ class LoadData():
     path_data: Directory with the folders with the speakers
     path_save: Place to save the reorderer data
     num_data: Max data pair for each speaker
-
     """
     def __init__(self, path_data, path_save, num_data):
         self.path_data = path_data
@@ -51,7 +50,6 @@ class LoadData():
         return negative_pairs
 
     def get_random_audio_from_speaker(self, dir_speaker):
-
         path = os.path.join(self.path_data, dir_speaker)
         only_first_folder = os.listdir(path)[0]
         first_folder_path = os.path.join(path, only_first_folder)
@@ -126,8 +124,7 @@ class LoadData():
             os.rename(os.path.join(save, par[0].split('\\')[-1]), os.path.join(save, new_name + '-1.flac'))
             os.rename(os.path.join(save, par[1].split('\\')[-1]), os.path.join(save, new_name + '-2.flac'))
 
-    def create_pairs(self):
-        
+    def create_pairs(self):  
         dir_pairs = self.positive_pairs()
 
         for i in range(len(dir_pairs)):  #i is num of speaker
@@ -140,7 +137,6 @@ class LoadData():
                     continue
     
     def create_diff(self):
-
         dir_diff = self.negative_pairs()
 
         for i in range(len(dir_diff)):
@@ -150,6 +146,7 @@ class LoadData():
         self.create_pairs()
         self.create_diff()
 
+    #Armar la parte de validación y train
 
 path_data = 'data\LibriSpeech\dev-clean'
 path_save = 'data\Ordered Data'

@@ -45,6 +45,11 @@ class FeatureExtraction():
 
         pass
 
+    def data_augmentation(self, audio):
+        """
+        Apply a random amount of reverb to create
+        new samples.
+        """
 
 
     def get_mel(self):
