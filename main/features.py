@@ -35,13 +35,11 @@ class FeatureExtraction():
         else:
             return audio[:fs*self.win]
 
-    def filter_signal(self, audio, fs):
+    def filter_signal(self, n, f1, f2, L):
         """
-        Apply filter to the signal to analize only the relevant
-        frecuencies for speakers
+        Crate custom sinc filter for the convolution
         """
-
-        #Hacer pasa alto y demás 
+        #Mejor usar implementación en tensor flow
 
         pass
 
