@@ -1,4 +1,5 @@
 #For metrics and testing of the model
+import numpy as np
 from keras import Model
 from keras.constraints  import unit_norm
 from keras import backend as K
@@ -7,6 +8,8 @@ import os
 from tensorflow.keras.layers import LeakyReLU, BatchNormalization, Flatten, MaxPooling1D, Concatenate, Lambda, Input
 from tensorflow.keras.layers import Dense, Conv1D
 from sincnet_tensorflow import SincConv1D, LayerNorm
+import random
+
 
 def euclidean_distance(vects):
     x, y = vects
@@ -116,26 +119,43 @@ def SiameseModel(input_dim):
 def test(test1_path, test2_path, model_path, fs, win, postive):
     audios_par = os.listdir(test1_path)
     audios_impar = os.listdir(test2_path)
-    par1 = librosa.load(os.path.join(test1_path, audios_par[0]), sr=fs)
-    par2 = librosa.load(os.path.join(test1_path, audios_par[1]), sr=fs)
 
-    dif = librosa.load(os.path.join(test2_path, audios_impar[0]), sr=fs)
+    rnd1 = random.randint(0,len(audios_par))
+    rnd2 = random.randint(0,len(audios_par))
+    rnd3 = random.randint(0, len(audios_impar))
+
+
+    par1, _ = librosa.load(os.path.join(test1_path, audios_par[rnd1]), sr=fs)
+    par2, _ = librosa.load(os.path.join(test1_path, audios_par[rnd2]), sr=fs)
+
+    dif, _ = librosa.load(os.path.join(test2_path, audios_impar[rnd3]), sr=fs)
 
     par1 = par1[0:fs*win]
     par2 = par2[0:fs*win]
     dif = dif[0:fs*win]
 
+
     if postive:
-        test = [par1, par2]
+        x1 = np.asarray(par1).astype("float32")
+        x1 = np.reshape(x1, (1, len(x1), 1))
+        x2 = np.asarray(par2).astype("float32")
+        x2 = np.reshape(x2, (1, len(x2), 1))
+        test = (x1, x2)
     else:
-        test = [par1,dif]
+        x1 = np.asarray(par1).astype("float32")
+        x1 = np.reshape(x1, (1, len(x1), 1))
+        x2 = np.asarray(dif).astype("float32")
+        x2 = np.reshape(x2, (1, len(x2), 1))
+        test = (x1, x2)
 
-    model = SiameseModel([10000, 10000])
-    model.load_weights(model_path)
+    #model = SiameseModel(10000)
+    model = Model().load_weights(model_path)
+    #model.load_weights(model_path)
 
+    #model.summary()
     pred = model.predict(test)
 
-    print(pred)
+    return pred
 
 test1 = 'data\Ordered Data\Pairs'
 test2 = 'data\Ordered Data\Diff'
@@ -144,5 +164,12 @@ fs = 10000
 win = 1
 pos = True
 
-test(test1, test2, model_path, fs, win, pos)
+results_pos = []
+
+for i in range(5):
+    rta = test(test1, test2, model_path, fs, win, pos)
+    results_pos.append(float(rta[0]))
+
+print(results_pos)
+
 
