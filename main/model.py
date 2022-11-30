@@ -177,7 +177,7 @@ class Siamese_Network():
         # --- function to assemble shared layers
         def get_shared_dnn(m_input):
             shared_cnn_a = a_21(a_20(a_19(a_18(a_17(a_16(a_15(a_14(a_13(a_12(a_11(a_10(a_9(a_8(a_7(a_6(a_5(a_4(a_3(a_2(sinc_layer1(m_input)))))))))))))))))))))
-            shared_cnn_b = b_21(a_20(b_19(a_18(b_17(b_16(b_15(b_14(b_13(b_12(b_11(b_10(b_9(b_8(b_7(b_6(b_5(b_4(b_3(b_2(sinc_layer2(m_input)))))))))))))))))))))
+            shared_cnn_b = b_21(a_20(b_19(b_18(b_17(b_16(b_15(b_14(b_13(b_12(b_11(b_10(b_9(b_8(b_7(b_6(b_5(b_4(b_3(b_2(sinc_layer2(m_input)))))))))))))))))))))
 
             return hidden_layer(mrg([shared_cnn_a,shared_cnn_b]))
 
