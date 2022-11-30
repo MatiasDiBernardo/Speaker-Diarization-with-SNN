@@ -148,9 +148,8 @@ def test(test1_path, test2_path, model_path, fs, win, postive):
         x2 = np.reshape(x2, (1, len(x2), 1))
         test = (x1, x2)
 
-    #model = SiameseModel(10000)
-    model = Model().load_weights(model_path)
-    #model.load_weights(model_path)
+    model = SiameseModel(10000)
+    model.load_weights(model_path)
 
     #model.summary()
     pred = model.predict(test)
