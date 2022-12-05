@@ -15,19 +15,19 @@ def euclidean_distance(vects):
     x, y = vects
     return K.sqrt(K.maximum(K.sum(K.square(x - y), axis=1, keepdims=True), K.epsilon()))
 
-def SiameseModel(input_dim):
+def SiameseModel(input_dim, fs):
         input_ref = Input((input_dim ,1), name="input_ref") # reference track
         input_dif = Input((input_dim ,1), name="input_dif") # different track
 
         sinc_layer1 = SincConv1D(N_filt=64,
                         Filt_dim=129,
-                        fs=10000,
+                        fs=fs,
                         stride=16,
                         padding="SAME")
 
         sinc_layer2 = SincConv1D(N_filt=64,
                         Filt_dim=129,
-                        fs=10000,
+                        fs=fs,
                         stride=16,
                         padding="SAME")
         #Stack A
@@ -148,7 +148,7 @@ def test(test1_path, test2_path, model_path, fs, win, postive):
         x2 = np.reshape(x2, (1, len(x2), 1))
         test = (x1, x2)
 
-    model = SiameseModel(10000)
+    model = SiameseModel(8000, 8000)
     model.load_weights(model_path)
 
     #model.summary()
@@ -158,17 +158,19 @@ def test(test1_path, test2_path, model_path, fs, win, postive):
 
 test1 = 'data\Ordered Data\Pairs'
 test2 = 'data\Ordered Data\Diff'
-model_path = 'models\W_1seg_FS_10000_EP_10.h5'
-fs = 10000
+model_path = 'models\W_1seg_FS_8000.h5'
+fs = 8000
 win = 1
-pos = True
+pos = False
 
 results_pos = []
 
-for i in range(5):
+for i in range(10):
     rta = test(test1, test2, model_path, fs, win, pos)
     results_pos.append(float(rta[0]))
 
+print('       ')
 print(results_pos)
+print('')
 
 

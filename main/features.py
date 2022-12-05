@@ -53,9 +53,13 @@ class FeatureExtraction():
     def get_mel(self):
         pass
 
+
+#Creo que va a ser mejor hacer la diferencia con los X - vector y ver después como eso lo puedo
+#mezclar en la arquietectura de red siamesa
+
 class X_Vector():
     '''
-    Get the x vector from the audio
+    Implementation of X_vector feature extraction
     '''
 
     def __init__(self):
